@@ -6,10 +6,14 @@ func Krypter(melding []rune, alphabet []rune, chiffer int) []rune {
 	kryptertMelding := make([]rune, len(melding))
 	for i := 0; i < len(melding); i++ {
 		indeks := sokIAlfabetet(melding[i], alphabet)
-		if indeks+chiffer >= len(alphabet) {
-			kryptertMelding[i] = alphabet[indeks+chiffer-len(alphabet)]
+		if indeks == -1 {
+			kryptertMelding[i] = melding[i]
 		} else {
-			kryptertMelding[i] = alphabet[indeks+chiffer]
+			nyIndeks := (indeks + chiffer) % len(alphabet)
+			if nyIndeks < 0 {
+				nyIndeks += len(alphabet)
+			}
+			kryptertMelding[i] = alphabet[nyIndeks]
 		}
 	}
 	return kryptertMelding
