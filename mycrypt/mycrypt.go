@@ -1,5 +1,7 @@
 package mycrypt
 
+import "unicode"
+
 var ALF_SEM03 []rune = []rune("abcdefghijklmnopqrstuvwxyzæøå0123456789.,:; ")
 
 func Krypter(melding []rune, alphabet []rune, chiffer int) []rune {
@@ -11,13 +13,20 @@ func Krypter(melding []rune, alphabet []rune, chiffer int) []rune {
 		} else {
 			kryptertMelding[i] = alphabet[indeks+chiffer]
 		}
+		if unicode.IsUpper(melding[i]) {
+			kryptertMelding[i] = 'd'
+		} else if melding[i] == 'd' {
+			kryptertMelding[i] = alphabet[sokIAlfabetet('K', alphabet)]
+			kryptertMelding = append(kryptertMelding, alphabet[sokIAlfabetet('S', alphabet)])
+			kryptertMelding = append(kryptertMelding, alphabet[sokIAlfabetet('N', alphabet)])
+		}
 	}
 	return kryptertMelding
 }
 
 func sokIAlfabetet(symbol rune, alfabet []rune) int {
-	for i := 0; i < len(alfabet); i++ {
-		if symbol == alfabet[i] {
+	for i, c := range alfabet {
+		if c == symbol {
 			return i
 		}
 	}
