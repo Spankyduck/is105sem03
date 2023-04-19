@@ -8,15 +8,18 @@ import (
 
 func main() {
 
-	kryptertRune := mycrypt.Krypter([]rune("Kjevik;SN39040;18.03.2022 01:50;6"), mycrypt.ALF_SEM03, 4)
+	input := "Kjevik;SN39040;18.03.2022 01:50;6"
+	key := mycrypt.ALF_SEM03
+	keyLength := 4
 
-	kryptertString := string(kryptertRune)
-	fmt.Println(kryptertString)
+	// Encrypt
+	encryptedRune := mycrypt.Krypter([]rune(input), key, keyLength)
+	encryptedString := string(encryptedRune)
+	fmt.Println("Encrypted:", encryptedString)
 
-	alfLength := len(mycrypt.ALF_SEM03)
-
-	dekryptertRune := mycrypt.Krypter(kryptertRune, mycrypt.ALF_SEM03, alfLength-4)
-	dekryptertString := string(dekryptertRune)
-	fmt.Println(dekryptertString)
+	// Decrypt
+	decryptedRune := mycrypt.Krypter(encryptedRune, key, len(key)-keyLength)
+	decryptedString := string(decryptedRune)
+	fmt.Println("Decrypted:", decryptedString)
 
 }
